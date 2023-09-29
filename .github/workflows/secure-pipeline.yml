@@ -52,6 +52,3 @@ jobs:
 
       - name: Output Snyk report
         run: cat snyk.json | jq
-
-      - name: Build app
-        run: npm run build
