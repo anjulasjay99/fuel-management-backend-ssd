@@ -1,4 +1,4 @@
-# Secure Dockerfile for Backend
+# Secure Dockerfile for Backend.
 FROM node:14.17.6
 
 # Create app directory and set the user to non-root user
