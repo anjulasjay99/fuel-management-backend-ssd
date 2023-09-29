@@ -1,4 +1,4 @@
-name: Fuel Management Backend Build
+name: Improved Security Build
 
 on:
   push:
@@ -6,16 +6,52 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-check:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=moderate
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          sonar.organization: ORGANIZATION
+          sonar.projectKey: PROJECT_KEY
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Run OWASP Zap Baseline scan
+        uses: zaproxy/action-baseline@v0.4.0
+        with:
+          target: "https://admin-rpms.netlify.app/login"
+
+      - name: Snyk security check
+        uses: snyk/actions/node@0.3.0
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --all-projects --print-deps --severity-threshold=high
+
+      - name: Secret Exposure Scan with gitleaks
+        uses: zricethezav/gitleaks-action@master
+        with:
+          config-path: gitleaks.toml
+
+      - name: Output Snyk report
+        run: cat snyk.json | jq
+
       - name: Build app
-        run: |
-          echo "Building app"
-          echo "MONGODB_URL=mongodb+srv://SPM123:shehan123@fuelmgmt.cwfv9hk.mongodb.net/?retryWrites=true&w=majority" >> .env
-          npm install
-          npm run build
+        run: npm run build
