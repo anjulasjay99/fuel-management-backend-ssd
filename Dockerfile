@@ -1,8 +1,20 @@
-FROM node:latest
-USER root
-COPY package.json /app/
+# Secure Dockerfile for Backend
+FROM node:14.17.6
+
+# Create app directory and set the user to non-root user
 WORKDIR /app
-ENV MONGODB_URL="mongodb+srv://SPM123:shehan123@fuelmgmt.cwfv9hk.mongodb.net/?retryWrites=true&w=majority"
-RUN npm install
-EXPOSE 22 6379 27017
+USER node
+
+# Use package lock file for deterministic builds
+COPY --chown=node:node package*.json ./
+
+# Install dependencies and run npm audit
+RUN npm ci && npm audit fix
+
+# Copy app source
+COPY --chown=node:node . .
+
+# Expose only necessary port
+EXPOSE 4000
+
 CMD ["npm", "start"]
