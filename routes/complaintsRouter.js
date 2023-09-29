@@ -40,7 +40,8 @@ router.route("/").post(async(req,res) =>{
 
   const { email, dateofComplaint, reason, complaintDetails,csrfTokenState} = req.body;
   console.log(csrfTokenState)
-  if(csrftoken != csrfTokenState){
+  console.log(csrftoken)
+  if(csrftoken == csrfTokenState){
     
     const newComplaint = new complaint({
       email,
@@ -48,7 +49,7 @@ router.route("/").post(async(req,res) =>{
       reason,
       complaintDetails,
     });
-  
+    console.log(newComplaint)
     newComplaint
       .save()
       .then((data) => {
