@@ -15,6 +15,6 @@ RUN npm ci && npm audit fix
 COPY --chown=node:node . .
 
 # Expose only necessary port
-EXPOSE 4000
+EXPOSE 8070
 
 CMD ["npm", "start"]
