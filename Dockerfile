@@ -5,7 +5,7 @@ FROM node:14.17.6
 WORKDIR /app
 USER node
 
-# Use package lock file for deterministic builds
+# Use package lock file for deterministic builds.
 COPY --chown=node:node package*.json ./
 
 # Install dependencies and run npm audit
