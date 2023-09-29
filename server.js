@@ -14,7 +14,7 @@ const fuelUsageRouter = require("./routes/fuelUsageRouter");
 const adminRouter = require("./routes/adminRouter");
 const fuelBookingRouter = require("./routes/fuelBookingsRouter");
 const fuelBookingReqRouter = require("./routes/fuelBookingReqRouter");
-
+var cookieParser = require('cookie-parser')
 const app = express();
 dotenv.config();
 
@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 8070;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
-
+app.use(cookieParser())
 // MongoDB Connection
 
 const URL = process.env.MONGODB_URL;
