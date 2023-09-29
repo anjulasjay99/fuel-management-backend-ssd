@@ -8,7 +8,7 @@ USER node
 # Use package lock file for deterministic builds.
 COPY --chown=node:node package*.json ./
 
-# Install dependencies and run npm audit
+# Install dependencies and run npm audit.
 RUN npm ci && npm audit fix
 
 # Copy app source
