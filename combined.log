@@ -1,0 +1,96 @@
+{"level":"info","message":"Server is up and running on port number 8070"}
+{"level":"info","message":"Mongo DB connection success!"}
+{"level":"info","message":"Server is up and running on port number 8070","timestamp":"2023-09-29T13:49:09.549Z"}
+{"level":"info","message":"Mongo DB connection success!","timestamp":"2023-09-29T13:49:12.822Z"}
+{"level":"info","message":"Request received: GET /null","timestamp":"2023-09-29T14:01:20.901Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T14:01:23.013Z"}
+{"level":"info","message":"Request received: POST /checkEmail","timestamp":"2023-09-29T14:03:37.560Z"}
+{"level":"info","message":"Succesfully Checked whether Email Already Exists for nishan@gmail.com ","timestamp":"2023-09-29T14:03:37.813Z"}
+{"level":"info","message":"Request received: POST /register","timestamp":"2023-09-29T14:03:37.823Z"}
+{"level":"info","message":"Server is up and running on port number 8070","timestamp":"2023-09-29T14:05:37.707Z"}
+{"level":"info","message":"Mongo DB connection success!","timestamp":"2023-09-29T14:05:40.896Z"}
+{"level":"info","message":"Request received: POST /checkEmail","timestamp":"2023-09-29T14:05:44.407Z"}
+{"level":"info","message":"Succesfully Checked whether Email Already Exists for nishan@gmail.com ","timestamp":"2023-09-29T14:05:44.604Z"}
+{"level":"info","message":"Request received: POST /checkEmail","timestamp":"2023-09-29T14:05:51.500Z"}
+{"level":"info","message":"Succesfully Checked whether Email Already Exists for nishan234@gmail.com ","timestamp":"2023-09-29T14:05:51.745Z"}
+{"level":"info","message":"Request received: POST /register","timestamp":"2023-09-29T14:05:51.752Z"}
+{"level":"info","message":"Succesfully saved data for new customer nishan234@gmail.com ","timestamp":"2023-09-29T14:05:52.154Z"}
+{"level":"info","message":"Server is up and running on port number 8070","timestamp":"2023-09-29T16:50:07.088Z"}
+{"level":"info","message":"Mongo DB connection success!","timestamp":"2023-09-29T16:50:17.856Z"}
+{"level":"info","message":"Request received: POST /checkEmail","timestamp":"2023-09-29T16:52:14.991Z"}
+{"level":"info","message":"Succesfully Checked whether Email Already Exists for nishan123@gmail.com ","timestamp":"2023-09-29T16:52:15.385Z"}
+{"level":"info","message":"Request received: POST /register","timestamp":"2023-09-29T16:52:15.400Z"}
+{"level":"info","message":"Succesfully saved data for new customer nishan123@gmail.com ","timestamp":"2023-09-29T16:52:16.659Z"}
+{"level":"info","message":"Request received: POST /login","timestamp":"2023-09-29T16:54:13.317Z"}
+{"level":"info","message":"Server is up and running on port number 8070","timestamp":"2023-09-29T16:56:12.289Z"}
+{"level":"info","message":"Mongo DB connection success!","timestamp":"2023-09-29T16:56:16.436Z"}
+{"level":"info","message":"Request received: POST /login","timestamp":"2023-09-29T16:56:30.184Z"}
+{"level":"info","message":"Succesfull login for customer nishan123@gmail.com","timestamp":"2023-09-29T16:56:31.244Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:56:34.782Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:56:35.065Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:56:35.070Z"}
+{"level":"info","message":"Request received: GET /getFuel/651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:56:35.076Z"}
+{"level":"info","message":"Fetched available fuel amount for customer Id : 651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:56:35.476Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:56:35.479Z"}
+{"level":"info","message":"Request received: GET /getFuel/651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:56:35.486Z"}
+{"level":"info","message":"Fetched available fuel amount for customer Id : 651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:56:35.691Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:56:36.004Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:56:37.625Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:56:37.627Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:56:37.818Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:56:38.858Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:56:39.158Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:56:39.161Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:56:39.571Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:56:43.449Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:56:43.869Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:56:43.871Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:56:44.283Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:56:47.665Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:56:47.966Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:56:47.971Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:56:48.376Z"}
+{"level":"info","message":"Request received: GET /getVehicles/nishan123@gmail.com","timestamp":"2023-09-29T16:56:53.266Z"}
+{"level":"info","message":"Succcesfully fetched vehicles for customer  nishan123@gmail.com","timestamp":"2023-09-29T16:56:53.704Z"}
+{"level":"info","message":"Request received: GET /getVehicles/nishan123@gmail.com","timestamp":"2023-09-29T16:56:53.717Z"}
+{"level":"info","message":"Succcesfully fetched vehicles for customer  nishan123@gmail.com","timestamp":"2023-09-29T16:56:53.911Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:03.894Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:04.149Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:04.151Z"}
+{"level":"info","message":"Request received: GET /getFuel/651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:57:04.154Z"}
+{"level":"info","message":"Fetched available fuel amount for customer Id : 651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:57:04.555Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:04.556Z"}
+{"level":"info","message":"Request received: GET /getFuel/651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:57:04.560Z"}
+{"level":"info","message":"Fetched available fuel amount for customer Id : 651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:57:04.971Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:04.986Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:05.171Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:05.174Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:05.360Z"}
+{"level":"info","message":"Request received: GET /getVehicles/nishan123@gmail.com","timestamp":"2023-09-29T16:57:12.419Z"}
+{"level":"info","message":"Succcesfully fetched vehicles for customer  nishan123@gmail.com","timestamp":"2023-09-29T16:57:12.604Z"}
+{"level":"info","message":"Request received: GET /getVehicles/nishan123@gmail.com","timestamp":"2023-09-29T16:57:12.607Z"}
+{"level":"info","message":"Succcesfully fetched vehicles for customer  nishan123@gmail.com","timestamp":"2023-09-29T16:57:12.957Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:14.242Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:14.589Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:14.594Z"}
+{"level":"info","message":"Request received: GET /getFuel/651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:57:14.601Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:14.998Z"}
+{"level":"info","message":"Fetched available fuel amount for customer Id : 651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:57:15.000Z"}
+{"level":"info","message":"Request received: GET /getFuel/651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:57:15.002Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:15.176Z"}
+{"level":"info","message":"Fetched available fuel amount for customer Id : 651700bfa96c5d48326b65e5","timestamp":"2023-09-29T16:57:15.210Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:16.434Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:16.436Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:16.674Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:20.442Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:20.734Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:20.739Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:21.146Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:22.729Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:23.602Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T16:57:23.606Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T16:57:24.216Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T17:12:53.333Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T17:12:53.608Z"}
+{"level":"info","message":"Request received: GET /nishan123@gmail.com","timestamp":"2023-09-29T17:12:53.613Z"}
+{"level":"info","message":"Customer Data Fetched","timestamp":"2023-09-29T17:12:54.013Z"}

@@ -14,7 +14,7 @@ const fuelUsageRouter = require("./routes/fuelUsageRouter");
 const adminRouter = require("./routes/adminRouter");
 const fuelBookingRouter = require("./routes/fuelBookingsRouter");
 const fuelBookingReqRouter = require("./routes/fuelBookingReqRouter");
-
+const logger = require('./utils/logger')
 const app = express();
 dotenv.config();
 
@@ -52,10 +52,12 @@ app.use("/fuelBookingRequests", fuelBookingReqRouter);
 
 const connection = mongoose.connection;
 connection.once("open", () => {
+  logger.info('Mongo DB connection success!');
   console.log("Mongo DB connection success!");
 });
 
 app.listen(PORT, () => {
+  logger.info(`Server is up and running on port number ${PORT}`);
   console.log(`Server is up and running on port number ${PORT}`);
 });
 
