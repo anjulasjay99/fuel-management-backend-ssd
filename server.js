@@ -14,7 +14,7 @@ const fuelUsageRouter = require("./routes/fuelUsageRouter");
 const adminRouter = require("./routes/adminRouter");
 const fuelBookingRouter = require("./routes/fuelBookingsRouter");
 const fuelBookingReqRouter = require("./routes/fuelBookingReqRouter");
-
+const fs = require("fs");
 const app = express();
 dotenv.config();
 
@@ -24,15 +24,20 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
-// MongoDB Connection
-
-const URL = process.env.MONGODB_URL;
+// Modified MongoDB Connection to use Docker Swarm Secrets if available
+let URL;
+if (process.env.MONGODB_URL_FILE) {
+  // If the MONGODB_URL_FILE environment variable is set, read the MongoDB URL from the specified file
+  // This is where Docker Swarm injects the secret at runtime
+  URL = fs.readFileSync(process.env.MONGODB_URL_FILE, "utf8").trim();
+} else {
+  // If MONGODB_URL_FILE is not set, fall back to using the MONGODB_URL environment variable
+  // This could be the case in a development environment or other environments without Docker Swarm Secrets
+  URL = process.env.MONGODB_URL;
+}
 
 mongoose.connect(URL, {
-  //  useCreateIndex: true,
-  //  useNewUrlParser: true,
   useUnifiedTopology: true,
-  //  useFindAndModify: false,
 });
 
 //routers
