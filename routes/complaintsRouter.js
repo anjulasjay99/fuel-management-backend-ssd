@@ -31,10 +31,10 @@ router.get('/getCSRFToken', csrfProtection,(req, res) => {
 
 //add new complaint
 router.route("/").post(async(req,res) =>{
-  console.log("hi")
-  console.log(csrftoken)
+  //console.log("hi")
+  //console.log(csrftoken)
   //console.log(req)
-  console.log(req.body)
+  //console.log(req.body)
   //res.set('Access-Control-Allow-Origin', 'csrfprotection-client.com');
   
 
@@ -53,11 +53,13 @@ router.route("/").post(async(req,res) =>{
       .save()
       .then((data) => {
         res.status(200).json();
+        console.log(res)
       })
       .then((err) => {
         res.status(400).json();
       });
   }else{
+    console.log("hi")
     res.status(303).json();
   }
   
