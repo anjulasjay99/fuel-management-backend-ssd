@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const FuelAllocation = require("../models/FuelAllocation");
+const validator = require("validator"); // Added this line to import validator
 
 //new fuel allocation
 router.route("/").post(async (req, res) => {
@@ -57,18 +58,27 @@ router.route("/:id").get((req, res) => {
     });
 });
 
-// Get Fuel Allocation by Customer 
-router.route("/byCus/:id").post((req,res) =>{
+// Get Fuel Allocation by Customer
+router.route("/byCus/:id").post((req, res) => {
   const id = req.params.id;
-  const { toDate , fromDate   } = req.body;
-  console.log( toDate , fromDate );
+  let { toDate, fromDate } = req.body; // Changed to let to allow modification below
 
-  FuelAllocation.find({ customerId : id , startDate : { $gt : fromDate , $lte : toDate }  }).then((data) =>{
-    res.status(200).json(data);
-    console.log(data);
-  }).catch((err) =>{
-    res.status(400).json({msg : "error"});
+  // Sanitize user input before logging
+  toDate = validator.escape(toDate); // Added to sanitize the input
+  fromDate = validator.escape(fromDate); // Added to sanitize the input
+
+  console.log(toDate, fromDate);
+
+  FuelAllocation.find({
+    customerId: id,
+    startDate: { $gt: fromDate, $lte: toDate },
   })
-})
+    .then((data) => {
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      res.status(400).json({ msg: "error" });
+    });
+});
 
 module.exports = router;

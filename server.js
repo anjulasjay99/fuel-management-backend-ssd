@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const csurf = require("csurf");
 const fuelStationRouter = require("./routes/fuelStationRouter");
 const fuelOrderRouter = require("./routes/fuelOrderRouter");
 const customerRouter = require("./routes/CustomerRoute");
@@ -14,7 +15,7 @@ const fuelUsageRouter = require("./routes/fuelUsageRouter");
 const adminRouter = require("./routes/adminRouter");
 const fuelBookingRouter = require("./routes/fuelBookingsRouter");
 const fuelBookingReqRouter = require("./routes/fuelBookingReqRouter");
-
+const fs = require("fs");
 const app = express();
 dotenv.config();
 
@@ -25,15 +26,24 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 
-// MongoDB Connection
+// Enable csurf protection
+const csrfProtection = csurf({ cookie: true }); //Configure csrf protection
+app.use(csrfProtection); // Enable csrf protection
 
-const URL = process.env.MONGODB_URL;
+// Modified MongoDB Connection to use Docker Swarm Secrets if available
+let URL;
+if (process.env.MONGODB_URL_FILE) {
+  // If the MONGODB_URL_FILE environment variable is set, read the MongoDB URL from the specified file
+  // This is where Docker Swarm injects the secret at runtime
+  URL = fs.readFileSync(process.env.MONGODB_URL_FILE, "utf8").trim();
+} else {
+  // If MONGODB_URL_FILE is not set, fall back to using the MONGODB_URL environment variable
+  // This could be the case in a development environment or other environments without Docker Swarm Secrets
+  URL = process.env.MONGODB_URL;
+}
 
 mongoose.connect(URL, {
-  //  useCreateIndex: true,
-  //  useNewUrlParser: true,
   useUnifiedTopology: true,
-  //  useFindAndModify: false,
 });
 
 //routers
@@ -51,9 +61,23 @@ app.use("/admin", adminRouter);
 app.use("/fuelBookings", fuelBookingRouter);
 app.use("/fuelBookingRequests", fuelBookingReqRouter);
 
+// Added a route to get the CSRF token for the client-side if needed
+app.get("/csrf-token", (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
+
 const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("Mongo DB connection success!");
+});
+
+// CSRF Error Handling
+app.use((err, req, res, next) => {
+  if (err.code !== "EBADCSRFTOKEN") return next(err);
+
+  // Handle CSRF token errors here
+  res.status(403);
+  res.send("Session has expired or form tampered with.");
 });
 
 app.listen(PORT, () => {

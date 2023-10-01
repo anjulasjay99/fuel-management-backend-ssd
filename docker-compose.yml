@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  app:
+    image: fuel-management-backend-ssd:latest
+    ports:
+      - "8070:8070"
+
+    # Specifies the secrets that the service has access to
+    secrets:
+      - mongodb_url # Refers to the 'mongodb_url' secret defined below
+
+    # Specifies the environment variables for the service
+    environment:
+      # Sets an environment variable 'MONGODB_URL_FILE' with the path to the 'mongodb_url' secret inside the service container
+      - MONGODB_URL_FILE=/run/secrets/mongodb_url
+
+# Defines secrets that can be used by services
+secrets:
+  mongodb_url:
+    external: true
