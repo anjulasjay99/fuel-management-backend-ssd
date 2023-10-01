@@ -1,0 +1,21 @@
+name: Fuel Management Backend Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build app
+        run: |
+          echo "Building app"
+          echo "MONGODB_URL=mongodb+srv://SPM123:shehan123@fuelmgmt.cwfv9hk.mongodb.net/?retryWrites=true&w=majority" >> .env
+          npm install
+          npm run build
