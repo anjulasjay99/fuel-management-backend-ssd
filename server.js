@@ -16,41 +16,44 @@ const adminRouter = require("./routes/adminRouter");
 const fuelBookingRouter = require("./routes/fuelBookingsRouter");
 const fuelBookingReqRouter = require("./routes/fuelBookingReqRouter");
 const fs = require("fs");
-const app = express();
+const cookieSession = require("cookie-session");
+const passportSetup = require("./passport");
+const passport = require("passport");
+const authRoute = require("./routes/auth");
 dotenv.config();
 
-const PORT = process.env.PORT || 8070;
+const app = express();
+app.use(
+  cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+);
 
-app.use(cors());
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
+
+const PORT = process.env.PORT || 5000;
+
 app.use(bodyParser.json());
 app.use(express.json());
 
-// Enable csurf protection
-const csrfProtection = csurf({ cookie: true }); //Configure csrf protection
-app.use(csrfProtection); // Enable csrf protection
-
-// Modified MongoDB Connection to use Docker Swarm Secrets if available
-let URL;
-if (process.env.MONGODB_URL_FILE) {
-  // If the MONGODB_URL_FILE environment variable is set, read the MongoDB URL from the specified file
-  // This is where Docker Swarm injects the secret at runtime
-  URL = fs.readFileSync(process.env.MONGODB_URL_FILE, "utf8").trim();
-} else {
-  // If MONGODB_URL_FILE is not set, fall back to using the MONGODB_URL environment variable
-  // This could be the case in a development environment or other environments without Docker Swarm Secrets
-  URL = process.env.MONGODB_URL;
-}
-
+// MongoDB Connection
+const URL = process.env.MONGODB_URL;
 mongoose.connect(URL, {
   useUnifiedTopology: true,
 });
 
-//routers
+// Routers
+app.use("/auth", authRoute);
 app.use("/fuelStations", fuelStationRouter);
 app.use("/fuelOrders", fuelOrderRouter);
-
 app.use("/customers", customerRouter);
-
 app.use("/complaints", complaintRouter);
 app.use("/unregisterStation", unregisteredStationRouter);
 app.use("/fuelAllocations", fuelAllocationRouter);
@@ -59,25 +62,6 @@ app.use("/fuelUsage", fuelUsageRouter);
 app.use("/admin", adminRouter);
 app.use("/fuelBookings", fuelBookingRouter);
 app.use("/fuelBookingRequests", fuelBookingReqRouter);
-
-// Added a route to get the CSRF token for the client-side if needed
-app.get("/csrf-token", (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
-});
-
-const connection = mongoose.connection;
-connection.once("open", () => {
-  console.log("Mongo DB connection success!");
-});
-
-// CSRF Error Handling
-app.use((err, req, res, next) => {
-  if (err.code !== "EBADCSRFTOKEN") return next(err);
-
-  // Handle CSRF token errors here
-  res.status(403);
-  res.send("Session has expired or form tampered with.");
-});
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number ${PORT}`);
