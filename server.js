@@ -15,6 +15,7 @@ const fuelUsageRouter = require("./routes/fuelUsageRouter");
 const adminRouter = require("./routes/adminRouter");
 const fuelBookingRouter = require("./routes/fuelBookingsRouter");
 const fuelBookingReqRouter = require("./routes/fuelBookingReqRouter");
+var cookieParser = require('cookie-parser')
 const fs = require("fs");
 const app = express();
 dotenv.config();
@@ -25,10 +26,10 @@ app.disable("x-powered-by");
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
-
+app.use(cookieParser())
 // Enable csurf protection
-const csrfProtection = csurf({ cookie: true }); //Configure csrf protection
-app.use(csrfProtection); // Enable csrf protection
+//const csrfProtection = csurf({ cookie: true }); //Configure csrf protection
+//app.use(csrfProtection); // Enable csrf protection
 
 // Modified MongoDB Connection to use Docker Swarm Secrets if available
 let URL;
@@ -61,24 +62,24 @@ app.use("/admin", adminRouter);
 app.use("/fuelBookings", fuelBookingRouter);
 app.use("/fuelBookingRequests", fuelBookingReqRouter);
 
-// Added a route to get the CSRF token for the client-side if needed
-app.get("/csrf-token", (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
-});
+// // Added a route to get the CSRF token for the client-side if needed
+// app.get("/csrf-token", (req, res) => {
+//   res.json({ csrfToken: req.csrfToken() });
+// });
 
 const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("Mongo DB connection success!");
 });
 
-// CSRF Error Handling
-app.use((err, req, res, next) => {
-  if (err.code !== "EBADCSRFTOKEN") return next(err);
+// // CSRF Error Handling
+// app.use((err, req, res, next) => {
+//   if (err.code !== "EBADCSRFTOKEN") return next(err);
 
-  // Handle CSRF token errors here
-  res.status(403);
-  res.send("Session has expired or form tampered with.");
-});
+//   // Handle CSRF token errors here
+//   res.status(403);
+//   res.send("Session has expired or form tampered with.");
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number ${PORT}`);
