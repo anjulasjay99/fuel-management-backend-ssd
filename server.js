@@ -16,6 +16,7 @@ const adminRouter = require("./routes/adminRouter");
 const fuelBookingRouter = require("./routes/fuelBookingsRouter");
 const fuelBookingReqRouter = require("./routes/fuelBookingReqRouter");
 var cookieParser = require('cookie-parser')
+
 const fs = require("fs");
 const app = express();
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cookieParser())
+
 // Enable csurf protection
 //const csrfProtection = csurf({ cookie: true }); //Configure csrf protection
 //app.use(csrfProtection); // Enable csrf protection
