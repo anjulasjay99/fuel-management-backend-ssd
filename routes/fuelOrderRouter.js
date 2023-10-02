@@ -1,6 +1,18 @@
 const router = require("express").Router();
 const FuelOrder = require("../models/FuelOrder");
 const { calculatePayment } = require("../utils/payments");
+const jwt = require("jsonwebtoken");
+
+//check if user is authorized
+const auth = (token) => {
+  try {
+    jwt.verify(token, "fsToken");
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
 
 //fetch all fuel orders
 router.route("/:id").get(async (req, res) => {
@@ -83,48 +95,54 @@ router.route("/:id").get(async (req, res) => {
 
 //place new fuel order
 router.route("/").post(async (req, res) => {
-  const {
-    stationId,
-    email,
-    type,
-    amount,
-    timeOfDelivery,
-    payment,
-    address,
-    city,
-    contactNo,
-    province,
-    zipCode,
-  } = req.body;
+  const token = req.header("x-access-token");
 
-  const refNo = "FO" + Date.now().toString();
-  const status = "In Progress";
+  if (auth(token)) {
+    const {
+      stationId,
+      email,
+      type,
+      amount,
+      timeOfDelivery,
+      payment,
+      address,
+      city,
+      contactNo,
+      province,
+      zipCode,
+    } = req.body;
 
-  const newOrder = new FuelOrder({
-    stationId,
-    refNo,
-    email,
-    type,
-    amount,
-    orderDate: new Date().toISOString().split("T")[0],
-    timeOfDelivery,
-    payment,
-    status,
-    address,
-    city,
-    province,
-    contactNo,
-    zipCode,
-  });
+    const refNo = "FO" + Date.now().toString();
+    const status = "In Progress";
 
-  newOrder
-    .save()
-    .then(() => {
-      res.status(200).json({ status: true, msg: "Success" });
-    })
-    .catch((err) => {
-      res.status(400).json({ status: false, error: err });
+    const newOrder = new FuelOrder({
+      stationId,
+      refNo,
+      email,
+      type,
+      amount,
+      orderDate: new Date().toISOString().split("T")[0],
+      timeOfDelivery,
+      payment,
+      status,
+      address,
+      city,
+      province,
+      contactNo,
+      zipCode,
     });
+
+    newOrder
+      .save()
+      .then(() => {
+        res.status(200).json({ status: true, msg: "Success" });
+      })
+      .catch((err) => {
+        res.status(400).json({ status: false, error: err });
+      });
+  } else {
+    res.status(400).json("Authentication Failed!");
+  }
 });
 
 //endpoint used for calculating order payemnt

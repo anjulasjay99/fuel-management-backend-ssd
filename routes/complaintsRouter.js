@@ -1,7 +1,13 @@
 const router = require("express").Router();
 const complaint = require("../models/complaints");
+const csrf = require("csurf");
+//var cookieParser = require('cookie-parser')
+var csrfProtection = csrf({ cookie: true })
 
+var csrftoken = '';
+//var parseForm = bodyParser.urlencoded({ extended: false })
 
+var csrfProtection = csrf({ cookie: true })
 
 //fetch all feedbacks
 router.route('/').get((req,res)=>{
@@ -14,27 +20,81 @@ router.route('/').get((req,res)=>{
   })
 })
 
+console.log(csrfProtection)
+router.get('/getCSRFToken', csrfProtection,(req, res) => {
+  console.log(csrfProtection)
+  csrftoken = req.csrfToken()
+  res.json({ CSRFToken: req.csrfToken() });
+});
+
+
 
 //add new complaint
-router.route("/").post(async (req, res) => {
-  const { email, dateofComplaint, reason, complaintDetails} = req.body;
+router.route("/").post(async(req,res) =>{
+  //console.log("hi")
+  //console.log(csrftoken)
+  //console.log(req)
+  //console.log(req.body)
+  //res.set('Access-Control-Allow-Origin', 'csrfprotection-client.com');
   
-  const newComplaint = new complaint({
-    email,
-    dateofComplaint,
-    reason,
-    complaintDetails,
-  });
 
-  newComplaint
-    .save()
-    .then((data) => {
-      res.status(200).json();
-    })
-    .then((err) => {
-      res.status(400).json();
+  const { email, dateofComplaint, reason, complaintDetails,csrfTokenState} = req.body;
+  console.log(csrfTokenState)
+  console.log(csrftoken)
+  if(csrftoken == csrfTokenState){
+    
+    const newComplaint = new complaint({
+      email,
+      dateofComplaint,
+      reason,
+      complaintDetails,
     });
+    console.log(newComplaint)
+    newComplaint
+      .save()
+      .then((data) => {
+        res.status(200).json();
+        console.log(res)
+      })
+      .then((err) => {
+        res.status(400).json();
+      });
+  }else{
+    console.log("hi")
+    res.status(303).json();
+  }
+  
 });
+
+// //add new complaint
+// router.route("/").post(async (req, res) => {
+ 
+//   console.log(csrftoken)
+//   //console.log(req)
+//   console.log(req.body)
+//   //res.set('Access-Control-Allow-Origin', 'csrfprotection-client.com');
+//   const { email, dateofComplaint, reason, complaintDetails,csrfTokenState} = req.body;
+//   console.log(csrfTokenState)
+//   const newComplaint = new complaint({
+//     email,
+//     dateofComplaint,
+//     reason,
+//     complaintDetails,
+//   });
+
+//   newComplaint
+//     .save()
+//     .then((data) => {
+//       res.status(200).json();
+//     })
+//     .then((err) => {
+//       res.status(400).json();
+//     });
+// });
+
+
+
+
 
 //get specific complaint
 router.route("/get/:id").get(async(req,res) =>{

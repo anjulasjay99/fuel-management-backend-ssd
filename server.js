@@ -15,6 +15,7 @@ const fuelUsageRouter = require("./routes/fuelUsageRouter");
 const adminRouter = require("./routes/adminRouter");
 const fuelBookingRouter = require("./routes/fuelBookingsRouter");
 const fuelBookingReqRouter = require("./routes/fuelBookingReqRouter");
+var cookieParser = require("cookie-parser");
 const fs = require("fs");
 const cookieSession = require("cookie-session");
 const passportSetup = require("./passport");
