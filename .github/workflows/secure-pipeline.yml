@@ -1,21 +1,61 @@
-name: Fuel Management Backend Build
+name: Improved Security Build
 
 on:
   push:
     branches:
       - main
+      - feature/pipeline
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
-  build:
+  # sonarcloud:
+  #   name: SonarCloud
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+  #     - name: SonarCloud Scan
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  snyk:
+    name: Snyk security check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  security-check:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build app
-        run: |
-          echo "Building app"
-          echo "MONGODB_URL=mongodb+srv://SPM123:shehan123@fuelmgmt.cwfv9hk.mongodb.net/?retryWrites=true&w=majority" >> .env
-          npm install
-          npm run build
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Run OWASP Zap Baseline scan
+        uses: zaproxy/action-baseline@v0.4.0
+        with:
+          target: "https://admin-rpms.netlify.app/login"
+
+      - name: Secret Exposure Scan with gitleaks
+        uses: zricethezav/gitleaks-action@master
+        with:
+          config-path: gitleaks.toml
+
+      - name: Output Snyk report
+        run: cat snyk.json | jq
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=moderate
